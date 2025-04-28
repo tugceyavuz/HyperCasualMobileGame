@@ -38,7 +38,7 @@ public class TriggerMathHandler : MonoBehaviour
     public void StartAgain()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("LVL1");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,13 +48,18 @@ public class TriggerMathHandler : MonoBehaviour
             if (spawnedObjects.Count > 0)
             {
                 int lastIndex = spawnedObjects.Count - 1;
-                int last2Index = spawnedObjects.Count - 2;
-                GameObject obj = spawnedObjects[lastIndex];
-                GameObject obj2 = spawnedObjects[last2Index];
-                spawnedObjects.RemoveAt(lastIndex);
-                spawnedObjects.RemoveAt(last2Index);
-                Destroy(obj);
-                Destroy(obj2);
+                GameObject obj;
+
+                if (lastIndex >= 0)
+                {
+                    obj = spawnedObjects[lastIndex];
+                    if (obj != null)
+                    {
+                        spawnedObjects.RemoveAt(lastIndex);
+                        Destroy(obj);
+                    }
+                }
+                
                 Debug.Log("Obstacle hit! Removed one spawned object.");
             }
             return; // Don't continue to math logic
